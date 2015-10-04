@@ -1,1 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JSMeme</title>
 
+  <!-- JQUERY -->
+  <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+
+  <!-- BOOTSTRAP -->
+  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+  <!-- KINETIC JS -->
+  <script src="http://cdnjs.cloudflare.com/ajax/libs/kineticjs/5.2.0/kinetic.min.js"></script>
+
+  <!-- ANIMATE CSS -->
+  <link rel="stylesheet" href="http://daneden.github.io/animate.css/animate.min.css" />
+
+  <!-- local files and other -->
+  <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="shortcut icon" href="../jsmeme.png" />
+  <link rel="stylesheet" href="jsmeme.css" />
+  <script src="jsmeme.js"></script>
+
+</head>
+<body>
+
+  <table>
+    <tr>
+      <td>
+        <div class="btn-group">
+          <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-upload"></span> Upload an image <span class="caret"></span></button>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" data-toggle="modal" data-target="#uploadModal"><span class="glyphicon glyphicon-hdd"></span> From your computer</a></li>
+            <li class="disabled"><a href="#" data-toggle="modal">More coming soon!</a></li>
+          </ul>
+        </div>
+      </td>
+      <td>
+        <div class="input-group">
+          <input type="text" class="form-control top-txt" placeholder="Top text" aria-describedby="basic-addon">
+          <span class="input-group-addon" title="Top text size"><input type="number" id="top-spinner" value="60" min="18" max="100" maxlength="3"></span>
+          <span class="input-group-addon" title="Top text's stroke thickness"><input type="number" id="top-thickness-spinner" value="2" min="1" max="9" maxlength="1"></span>
+          <span class="input-group-btn">
+            <button class="btn btn-danger" type="button" id="reset-top-txt" data-toggle="tooltip" data-placement="bottom" title="This resets the text's position.">Reset</button>
+          </span>
+        </div>
+      </td>
+      <td>
+        <div class="input-group">
+          <input type="text" class="form-control bottom-txt" placeholder="Bottom text" aria-describedby="basic-addon">
+          <span class="input-group-addon" title="Bottom text size"><input type="number" id="bottom-spinner" value="60" min="18" max="100" maxlength="3"></span>
+          <span class="input-group-addon" title="Bottom text's stroke thickness"><input type="number" id="bottom-thickness-spinner" value="2" min="1" max="9" maxlength="1"></span>
+          <span class="input-group-btn">
+            <button class="btn btn-danger" type="button" id="reset-bottom-txt" data-toggle="tooltip" data-placement="bottom" title="This resets the text's position.">Reset</button>
+          </span>
+        </div>
+      </td>
+      <td>
+        <a href="#" class="btn btn-default btn-primary btn-md" id="save-btn" target="_self"><span class="glyphicon glyphicon-download"></span> Download Meme</a>
+      </td>
+    </tr>
+  </table>
+
+  <div class="modal fade" id="uploadModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="myModalLabel">Upload a file from your computer</h3>
+        </div>
+        <div class="modal-body">
+          <input type="file" id="dropper" accept="image/png, image/jpg, image/jpeg, image/gif" />
+          <i>We'll accept any image in the .png, .jpg, .jpeg or .gif format.</i>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="list-group" id="cc-menu" style="width:150px; position:absolute; z-index:9999; display:none;">
+    <a href="#" class="list-group-item disabled">JSMeme</a>
+    <a href="#" class="list-group-item" data-toggle="modal" data-target="#creditsModal">Credits</a>
+  </div>
+
+  <table id="meme-box">
+    <tr>
+      <td>
+        <div id="container" style="margin-left:auto;margin-right:auto;display:block;">
+        </div>
+      </td>
+    </tr>
+  </table>
+
+  <div class="modal fade" id="creditsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="myModalLabel">Credits</h3>
+        </div>
+        <div class="modal-body">
+          <div>
+            &copy; 2014-2015 <a href="http://tac61.webstarts.com">theawesomecoder61</a>. If you really enjoy using JSMeme because of its simplicity and awesomeness, please feel free to fork this on <a href="http://github.com/theawesomecoder61/JSMeme/">GitHub</a>.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="hidden"></div>
+
+</body>
+</html>
