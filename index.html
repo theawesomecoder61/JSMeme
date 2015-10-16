@@ -10,18 +10,21 @@
   <link rel="stylesheet" href="https://bootswatch.com/paper/bootstrap.min.css">
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 
-  <!-- KINETIC JS -->
+  <!-- KINETICJS -->
   <script src="http://cdnjs.cloudflare.com/ajax/libs/kineticjs/5.2.0/kinetic.min.js"></script>
 
-  <!-- ANIMATE CSS -->
+  <!-- ANIMATE.CSS -->
   <link rel="stylesheet" href="http://daneden.github.io/animate.css/animate.min.css" />
 
-  <!-- local files and other -->
+  <!-- FILESAVER & TOBLOB -->
+  <script src="https://cdn.rawgit.com/eligrey/canvas-toBlob.js/master/canvas-toBlob.js"></script>
   <script src="https://cdn.rawgit.com/eligrey/FileSaver.js/master/FileSaver.min.js"></script>
+
+  <!-- local files and other -->
   <meta name="viewport" content="initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="shortcut icon" href="../jsmeme.png" />
-  <link rel="stylesheet" href="jsmeme.css" />
-  <script src="jsmeme.js"></script>
+  <link rel="stylesheet" href="http://tac61.webstarts.com/jsmeme/jsmeme.css" />
+  <script src="http://tac61.webstarts.com/jsmeme/jsmeme.js"></script>
 
 </head>
 <body>
@@ -29,19 +32,24 @@
   <table>
     <tr>
       <td>
-        <div class="btn-group">
-          <button type="button" class="btn btn-success btn-md dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-upload"></span> Upload an image <span class="caret"></span></button>
+        <div class="btn-group btn-block">
+          <button type="button" class="btn btn-block btn-success dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-upload"></span> Upload an image <span class="caret"></span></button>
           <ul class="dropdown-menu" role="menu">
             <li><a href="#" data-toggle="modal" data-target="#uploadModal"><span class="glyphicon glyphicon-hdd"></span> From your computer</a></li>
-            <li class="disabled"><a href="#" data-toggle="modal">More coming soon!</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#urlModal"><span class="glyphicon glyphicon-link"></span> From a URL</a></li>
           </ul>
         </div>
       </td>
       <td>
+        <a href="#" class="btn btn-block btn-primary btn-md" id="save-btn" target="_self"><span class="glyphicon glyphicon-download"></span> Download Meme</a>
+      </td>
+    </tr>
+    <tr>
+      <td>
         <div class="input-group">
           <input type="text" class="form-control top-txt" placeholder="Top text" aria-describedby="basic-addon">
-          <span class="input-group-addon" title="Top text size"><input type="number" id="top-spinner" value="60" min="18" max="100" maxlength="3"></span>
-          <span class="input-group-addon" title="Top text's stroke thickness"><input type="number" id="top-thickness-spinner" value="2" min="1" max="9" maxlength="1"></span>
+          <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Top text size"><input type="number" id="top-spinner" value="60" min="18" max="100" maxlength="3"></span>
+          <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Top text's stroke thickness"><input type="number" id="top-thickness-spinner" value="2" min="1" max="9" maxlength="1"></span>
           <span class="input-group-btn">
             <button class="btn btn-danger" type="button" id="reset-top-txt" data-toggle="tooltip" data-placement="bottom" title="This resets the text's position.">Reset</button>
           </span>
@@ -50,15 +58,12 @@
       <td>
         <div class="input-group">
           <input type="text" class="form-control bottom-txt" placeholder="Bottom text" aria-describedby="basic-addon">
-          <span class="input-group-addon" title="Bottom text size"><input type="number" id="bottom-spinner" value="60" min="18" max="100" maxlength="3"></span>
-          <span class="input-group-addon" title="Bottom text's stroke thickness"><input type="number" id="bottom-thickness-spinner" value="2" min="1" max="9" maxlength="1"></span>
+          <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Bottom text size"><input type="number" id="bottom-spinner" value="60" min="18" max="100" maxlength="3"></span>
+          <span class="input-group-addon" data-toggle="tooltip" data-placement="bottom" title="Bottom text's stroke thickness"><input type="number" id="bottom-thickness-spinner" value="2" min="1" max="9" maxlength="1"></span>
           <span class="input-group-btn">
             <button class="btn btn-danger" type="button" id="reset-bottom-txt" data-toggle="tooltip" data-placement="bottom" title="This resets the text's position.">Reset</button>
           </span>
         </div>
-      </td>
-      <td>
-        <a href="#" class="btn btn-default btn-primary btn-md" id="save-btn" target="_self"><span class="glyphicon glyphicon-download"></span> Download Meme</a>
       </td>
     </tr>
   </table>
@@ -75,7 +80,23 @@
           <i>We'll accept any image in the .png, .jpg, .jpeg or .gif format.</i>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title" id="myModalLabel">Upload a file from a URL</h3>
+        </div>
+        <div class="modal-body">
+          <input id="urlbox" placeholder="ex. http://imgflip.com/s/meme/Y-U-No.jpg"><br/>
+          <i>We'll accept any image in the .png, .jpg, .jpeg or .gif format.</i>
+        </div>
+        <div class="modal-footer">
         </div>
       </div>
     </div>
@@ -104,7 +125,7 @@
         </div>
         <div class="modal-body">
           <div>
-            &copy; 2014-2015 <a href="http://tac61.webstarts.com">theawesomecoder61</a>. If you really enjoy using JSMeme because of its simplicity and awesomeness, please feel free to fork this on <a href="http://github.com/theawesomecoder61/JSMeme/">GitHub</a>.
+            &copy; 2014-2015 <a href="http://tac61.webstarts.com">theawesomecoder61</a>. If you really enjoy using JSMeme because of its simplicity and awesomeness, please feel free to fork this on <a href="http://git.io/vC9Zv">GitHub</a>.
           </div>
         </div>
       </div>
