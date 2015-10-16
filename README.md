@@ -1,2 +1,2 @@
 # JSMeme
-An online meme creator written in Javascript.
+An online meme creator written in Javascript without watermarks.
